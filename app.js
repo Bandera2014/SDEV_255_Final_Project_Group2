@@ -12,8 +12,18 @@ const app = express();
 
  // function to search for "index" as an ejs type
  app.get('/',(req,res) => {
-    res.render('index', { title: 'Login' }); // creates variable title = Login
- });
+   res.render('index', { title: 'Login' }); // creates variable title = Login
+});
+
+ // function to search for "catalog" as an ejs type
+ app.get('/catalog',(req,res) => {
+   res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
+});
+
+ // function to search for "schedule" as an ejs type
+ app.get('/schedule',(req,res) => {
+   res.render('schedule', { title: 'Schedule' }); // creates variable title = Schedule
+});
 
  // route any other sites here
 

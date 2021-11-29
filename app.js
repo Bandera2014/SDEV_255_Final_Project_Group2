@@ -12,7 +12,7 @@ const app = express();
 
  // function to search for "index" as an ejs type
  app.get('/',(req,res) => {
-    res.render('index');
+    res.render('index', { title: 'Login' }); // creates variable title = Login
  });
 
  // route any other sites here
@@ -23,5 +23,5 @@ const app = express();
  then default to this 404 page.
  Also sets the error status to 404*/
  app.use((req,res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', { title: '404' });// creates variable title = 404
   });

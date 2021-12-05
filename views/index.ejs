@@ -2,17 +2,18 @@
 <html lang="en">
     <%- include('./partials/head.ejs') %>
 <body style="background: #093824;">
-    <nav class="navbar navbar-light navbar-expand-md">
-        <div class="container-fluid"><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
-    </nav>
     <div class="container">
-        <section class="login-dark" style="background: url('/views/assets/img/loginBckgrnd.png') center / cover no-repeat;border-style: solid;border-radius: 10;">
+        <section class="login-dark" style="background: url(&quot;assets/img/loginBckgrnd.png&quot;) center / cover no-repeat;border-style: solid;border-radius: 10;">
             <form method="post" style="background: rgba(244,247,245,0.84);">
                 <h2 class="visually-hidden">Login Form</h2>
+                <h3 class="display-6 text-center" style="color: rgb(6,6,6);">Welcome!</h3>
                 <div class="illustration"><img class="img-fluid justify-content-center" src="/views/assets/img/logoRes.png" width="250px" height="300px"></div>
-                <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email" style="border-radius: 5px;border-style: solid;border-color: rgb(128,128,128);"></div>
-                <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password" style="border-style: solid;border-color: rgb(149,147,147);border-radius: 5px;"></div>
-                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-success);">Log In</button></div><a class="forgot" href="#">Forgot your email or password?</a>
+                <div class="mb-3"><input class="form-control" type="email" id="emailVal" name="email" placeholder="Email" style="border-radius: 5px;border-style: solid;border-color: rgb(128,128,128);"></div>
+                <div class="mb-3"><input class="form-control" type="password" id="passwordVal" name="password" placeholder="Password" style="border-style: solid;border-color: rgb(149,147,147);border-radius: 5px;"></div>
+                <button class="btn btn-primary d-block w-100" id="studentBtn" type="submit" style="background: var(--bs-success);">Log In As Student</button>
+                <button class="btn btn-primary d-block w-100" id="facultyBtn" type="submit" style="background: #ddb12c;color: rgb(0,0,0);">Log In As Faculty</button>
+                <a class="forgot" href="#">Forgot your email or password?</a>
+                <a class="forgot" href="#">Create Account</a>
             </form>
         </section>
     </div>

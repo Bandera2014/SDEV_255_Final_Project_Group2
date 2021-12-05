@@ -21,12 +21,12 @@ const app = express();
    res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
 });
 
- // function to search for "schedule" as an ejs type
- app.get('/schedule',(req,res) => {
-   res.render('schedule', { title: 'Schedule' }); // creates variable title = Schedule
+ // function to search for "home" as an ejs type
+ app.get('/home',(req,res) => {
+   res.render('home', { title: 'Welcome' }); // creates variable title = Home
 });
 
- // function to search for "schedule" as an ejs type
+ // function to search for "Register" as an ejs type
  app.get('/register',(req,res) => {
   res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
 });

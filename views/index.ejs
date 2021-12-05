@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('./partials/head.ejs') %>
-<body style="background: #093824;">
+<body class="d-flex flex-column min-vh-100" style="background: #093824;">
     <div class="container">
         <section class="login-dark" style="background: url(&quot;assets/img/loginBckgrnd.png&quot;) center / cover no-repeat;border-style: solid;border-radius: 10;">
             <form method="post" style="background: rgba(244,247,245,0.84);">
@@ -13,7 +13,7 @@
                 <button class="btn btn-primary d-block w-100" id="studentBtn" type="submit" style="background: var(--bs-success);">Log In As Student</button>
                 <button class="btn btn-primary d-block w-100" id="facultyBtn" type="submit" style="background: #ddb12c;color: rgb(0,0,0);">Log In As Faculty</button>
                 <a class="forgot" href="#">Forgot your email or password?</a>
-                <a class="forgot" href="/register">Create Account</a>
+                <a class="forgot" href="register">Create Account</a>
             </form>
         </section>
     </div>

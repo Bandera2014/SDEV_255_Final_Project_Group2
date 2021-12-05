@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body style="background: #093824;">
+    <div class="container">
+        <section class="login-dark" style="background: url(&quot;assets/img/loginBckgrnd.png&quot;) center / cover no-repeat;border-style: solid;border-radius: 10;">
+            <form method="post" style="background: rgba(244,247,245,0.84);">
+                <h2 class="visually-hidden">Login Form</h2>
+                <h3 class="display-6 text-center" style="color: rgb(6,6,6);">Welcome!</h3>
+                <div class="mb-3"></div><input class="form-control" type="email" id="First-Name" name="firstName" value="First Name" placeholder="First Name" autofocus="" required="" style="color: rgb(8,8,8);border-width: 1px;border-style: solid;">
+                <div class="mb-3"></div><input class="form-control" type="text" name="lastName" value="Last Name" placeholder="Last Name" required="" style="color: rgb(11,11,11);border-width: 1px;border-style: solid;"><input class="form-control" type="email" style="border: 1px solid rgb(0,0,0);margin-top: 14px;color: rgb(0,0,0);" required="" inputmode="email" name="email" value="Email" placeholder="Email">
+                <div class="dropdown"><button class="btn active dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="margin-top: 14px;">Major</button>
+                    <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                </div>
+                <div class="mb-3"><button class="btn btn-primary d-block w-100" id="studentBtn" type="submit" style="background: var(--bs-success);">Register As Student</button><button class="btn btn-primary d-block w-100" id="facultyBtn" type="submit" style="background: #ddb12c;color: rgb(0,0,0);">Register As Faculty</button></div><a class="forgot" href="#"></a>
+            </form>
+        </section>
+    </div>
+    <script src="/views/assets/bootstrap/js/bootstrap.min.js"/></script>
+    <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

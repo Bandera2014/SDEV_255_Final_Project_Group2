@@ -26,6 +26,11 @@ const app = express();
    res.render('schedule', { title: 'Schedule' }); // creates variable title = Schedule
 });
 
+ // function to search for "schedule" as an ejs type
+ app.get('/register',(req,res) => {
+  res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
+});
+
  // route any other sites here
 
 

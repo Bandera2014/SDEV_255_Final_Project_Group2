@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('./partials/head.ejs') %>
-<body>
-    <h1>INDEX</h1>
-    <button><a href="schedule">imagine this is the login button</a></button>
+    <%- include('./partials/head.ejs') %>
+<body class="d-flex flex-column min-vh-100" style="background: #093824;">
+    <div class="container">
+        <section class="login-dark" style="background: url(&quot;img/loginBckgrnd.png&quot;) center / cover no-repeat;border-style: solid;border-radius: 10;">
+            <form method="post" style="background: rgba(244,247,245,0.84);">
+                <h2 class="visually-hidden">Login Form</h2>
+                <h3 class="display-6 text-center" style="color: rgb(6,6,6);">Welcome!</h3>
+                <div class="illustration"><img class="img-fluid justify-content-center" src="/img/logoRes.png" width="250px" height="300px"></div>
+                <div class="mb-3"><input class="form-control" type="email" id="emailVal" name="email" placeholder="Email" style="border-radius: 5px;border-style: solid;border-color: rgb(128,128,128);"></div>
+                <div class="mb-3"><input class="form-control" type="password" id="passwordVal" name="password" placeholder="Password" style="border-style: solid;border-color: rgb(149,147,147);border-radius: 5px;"></div>
+                <button class="btn btn-primary d-block w-100" id="studentBtn" type="submit" style="background: var(--bs-success);">Log In As Student</button>
+                <button class="btn btn-primary d-block w-100" id="facultyBtn" type="submit" style="background: #ddb12c;color: rgb(0,0,0);">Log In As Faculty</button>
+                <a class="forgot" href="#">Forgot your email or password?</a>
+                <a class="forgot" href="register">Create Account</a>
+            </form>
+        </section>
+    </div>
+    <script src="/bootstrap.min.js"/></script>
+    <%- include('./partials/footer.ejs') %>
 </body>
+
 </html>

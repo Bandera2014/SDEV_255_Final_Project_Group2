@@ -6,10 +6,13 @@ const app = express();
 
  //register view engine
  app.set('view engine', 'ejs');
- app.use('/views', express.static('views'));
 
  // listen for requests
  app.listen(3000);
+
+  // middleware & static files
+ app.use(express.static('public'));
+
 
  // function to search for "index" as an ejs type
  app.get('/',(req,res) => {

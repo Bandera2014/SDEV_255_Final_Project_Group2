@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const MongoDBSession = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
+const UserModel = require('./models/User');
 const mongoURI = 'mongodb+srv://admin:pass1234@finalproject.hdvyl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 // Connect to database
@@ -19,6 +20,7 @@ const app = express();
 
  //register view engine
  app.set('view engine', 'ejs');
+ app.use(express.urlencoded({ extended: true}));
 
  // session stuff
  app.use(
@@ -55,6 +57,21 @@ const app = express();
  app.get('/register',(req,res) => {
   res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
 });
+app.post('/register', async (req, res) => {
+  const { firstName, lastName, email, password, major, options} = req.body;
+  let user = await UserModel.findOne({email});
+  if (user) {
+    return res.redirect('/register');
+  }
+user = new UserModel({
+  firstName,
+  lastName,
+  email,
+  password,
+});
+await user.save();
+res.redirect('/')
+})
 
  // route any other sites here
 

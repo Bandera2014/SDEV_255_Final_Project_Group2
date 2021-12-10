@@ -1,0 +1,14 @@
+.toast {
+    position:fixed;
+    top:400px;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    max-width:200px;
+    padding: 6px;
+    background: #cccccc;
+    color: #333333;
+    font-family: sans-serif;
+    
+}

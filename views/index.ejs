@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%- include('./partials/head.ejs') %>
+    <link rel="stylesheet" href="/toast/toast.css">
 <body class="d-flex flex-column min-vh-100" style="background: #093824;">
     <div class="container">
         <section class="login-dark" style="background: url(&quot;img/loginBckgrnd.png&quot;) center / cover no-repeat;border-style: solid;border-radius: 10;">
@@ -15,9 +16,12 @@
                 <a class="forgot" href="#">Forgot your email or password?</a>
                 <a class="forgot" href="register">Create Account</a>
             </form>
+            <div class="toast">Welcome Back!</div>
+            <div class="toast">Invalid Login.</div>
         </section>
     </div>
     <script src="/bootstrap.min.js"/></script>
+    <script src="/toast/toast.js"></script>
     <%- include('./partials/footer.ejs') %>
 </body>
 

@@ -19,10 +19,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    major: {
-        type: String,
-        required: true
-    },
     options: {
         type: String,
         required: true

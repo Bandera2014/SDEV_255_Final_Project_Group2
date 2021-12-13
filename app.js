@@ -42,7 +42,14 @@
  
 // middleware & static files
   app.use(express.static('public'));
- 
+  const isAuth = (req, res, next) => {
+    if(req.session.isAuth) {
+      next()
+    } else {
+      console.log('not authenticated')
+      res.redirect('/login');
+    }
+ }
  
 // Login routes
 
@@ -67,21 +74,23 @@
     return res.redirect('/login');
     console.log('password does not match')
   }
+  // sets user authentication to true
+  req.session.isAuth = true;
   res.redirect('/home')
 })
  
 // Catalog routes
-  app.get('/catalog',(req,res) => {
+  app.get('/catalog', isAuth, (req,res) => {
     res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
  });
  
 // function to search for "home" as an ejs type
- app.get('/home',(req,res) => {
+ app.get('/home', isAuth, (req,res) => {
     res.render('home', { title: 'Welcome' }); // creates variable title = Home
  });
  
 // register routes
-  app.get('/register',(req,res) => {
+  app.get('/register', (req,res) => {
     res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
   });
   app.post('/register', async (req, res) => {
@@ -111,7 +120,15 @@
     await user.save();
     res.redirect('/login')
   })
- 
+// Logout button
+  app.post('/logout', (req,res) => {
+    req.session.destroy((err) => {
+      if(err) throw err;
+      res.redirect('/');
+    })
+  })
+
+
   // route any other sites here
  
  

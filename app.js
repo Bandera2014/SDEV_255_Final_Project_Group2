@@ -53,12 +53,15 @@ const app = express();
    res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
 });
 
- // function to search for "home" as an ejs type
- app.get('/home',(req,res) => {
-   res.render('home', { title: 'Welcome' }); // creates variable title = Home
+// function to search for "home" as an ejs type
+app.get('/home',(req,res) => {
+   res.render('index', { title: 'Welcome' }); // creates variable title = Home
 });
 
  // function to search for "Register" as an ejs type
+ app.get('/register',(req,res) => {
+  res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
+});
 app.post('/register', async (req, res) => {
     console.log("post register")
     var firstName = req.body.firstName;
@@ -80,7 +83,7 @@ app.post('/register', async (req, res) => {
       password,
       options
     });
-    console.log(user)
+    console.log(user._id)
     await user.save();
     console.log("below save")
     res.redirect('/')
@@ -88,17 +91,17 @@ app.post('/register', async (req, res) => {
 app.post('/login',async(req,res)=>{
   console.log("begin login route")
   var em = req.body.email;
-  var pw = req.body.email;
+  var pw = req.body.password;
   var opt = req.body.classification;
   console.log(req.body.classification)
   
+  
   let user = await UserModel.findOne({
-    firstName:"first",
-    lastName:"last",
+    firstName:"larry",                    //Need to hard code 
+    lastName:"boy",                       //Need to hard code
     email:req.body.email,
     password:req.body.password,
     options:req.body.classification,
-    
   });
   // let user = await UserModel.findById("61b69fc07ec0f6b83288e906")
   console.log(user)

@@ -23,6 +23,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    courses:[mongoose.SchemaTypes.ObjectId]
 });
 
 module.exports = mongoose.model('User', userSchema);

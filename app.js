@@ -58,7 +58,11 @@
     res.render('login', { title: 'Login' }); // creates variable title = Login
   });
   app.get('/',(req,res) => {
-    res.redirect('/login')
+    req.session.destroy((err) => {
+      if(err) throw err;
+      res.redirect('/login');
+    })
+    // res.redirect('/login')
   });
 
 
@@ -148,10 +152,7 @@ app.post('/add', async (req, res) => {
   // route any other sites here
 
  
-  /* keep this file on bottom
-  if site cannot find any of the above 
-  then default to this 404 page.
-  Also sets the error status to 404*/
+  //404 page
   app.use((req,res) => {
      res.status(404).render('404', { title: '404' });// creates variable title = 404
    });

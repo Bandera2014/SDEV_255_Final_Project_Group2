@@ -59,9 +59,6 @@ const app = express();
 });
 
  // function to search for "Register" as an ejs type
-app.get('/register',(req,res) => {
-  res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
-});
 app.post('/register', async (req, res) => {
     console.log("post register")
     var firstName = req.body.firstName;
@@ -95,7 +92,7 @@ app.post('/login',async(req,res)=>{
   var opt = req.body.classification;
   console.log(req.body.classification)
   
-  let user = await UserModel.find({
+  let user = await UserModel.findOne({
     firstName:"first",
     lastName:"last",
     email:req.body.email,
@@ -107,7 +104,7 @@ app.post('/login',async(req,res)=>{
   console.log(user)
   
   if (user){
-    console.log("going home")
+    console.log(user.firstName)
     return res.render('home', { user: user, title: 'Home Page'})
   }
   res.redirect('/login')

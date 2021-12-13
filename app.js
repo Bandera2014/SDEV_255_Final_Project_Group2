@@ -59,24 +59,27 @@
   app.get('/',(req,res) => {
     res.redirect('/login')
   });
+
+
   app.post('/login', async (req,res) => {
 // saver user input to variables
   const { email, password } = req.body;
 // search for email and see if its in the DB
   const user = await UserModel.findOne({email});
   if(!user) {
-    return res.redirect('/login')
     console.log('email doesnt exsist in database')
+    return res.redirect('/login')
   }
 // compare user password with database pass
   const isMatch = await bcrypt.compare(password, user.password);
   if(!isMatch) {
+    console.log('incorrect password')
     return res.redirect('/login');
-    console.log('password does not match')
   }
   // sets user authentication to true
   req.session.isAuth = true;
   req.session.userid = user.id;
+  console.log('logged in')
   res.redirect('/home')
 })
  
@@ -86,10 +89,12 @@
   });
  
 // function to search for "home" as an ejs type
- app.get('/home', isAuth, (req,res) => {
-    res.render('home', { title: 'Welcome' }); // creates variable title = Home
-  });
- 
+ app.get('/home', isAuth, async (req,res) => {
+    const user = await UserModel.findById(req.session.userid)
+    console.log(user.firstName)
+    res.render('home', { title: 'Welcome', user }); // creates variable title = Home
+ });
+
 // register routes
   app.get('/register', (req,res) => {
     res.render('register', { title: 'Register for an Account' }); // creates variable title = Register

@@ -7,13 +7,13 @@
         <div class="row">
             <div class="col-md-6" style="background: rgba(244,247,245,0.78);width: 460px;height: 525px;margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);">
                 <div class="card"></div><img class="rounded-circle img-fluid" id="avatarId" src="img/placeholderphoto.png" style="width: 125px;height: 125px;margin-bottom: 20px;" alt="placeholder avatar">
-                <h2 class="display-6 justify-content-center" id="studentName"> </h2>
+                <h2 class="display-6 justify-content-center" id="studentName"><%= user.firstName %> <%= user.lastName %> </h2>
                 <h5 class="text-muted d-inline-block mb-2" id="major">Software Engineering Major</h5>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="justify-content-start flex-nowrap" id="enrollmentStatus">Enrollment Status:</h5>
-                        <h5 id="academicStanding">Academic Standing:</h5>
-                        <h5 id="finAidStanding">Financial Aid Standing:</h5>
+                        <h5 class="justify-content-start flex-nowrap" id="enrollmentStatus">Enrollment Status: <%= user.enrollment %></h5>
+                        <h5 id="academicStanding">Academic Standing: <%= user.academic %></h5>
+                        <h5 id="finAidStanding">Financial Aid Standing: <%= user.financialaid %></h5>
                     </div>
                 </div>
                 <figure class="figure"><img class="img-fluid figure-img" src="img/editclass.png" width="64px" height="64px" style="margin-top: 20px;margin-right: 20px;">
@@ -35,27 +35,19 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" role="tabpanel" id="tab-1">
+                                    <% if (user.courses.length > 0) { %>
+                                        <% user.courses.forEach(courses => { %>
                             <div class="card" style="height: 125px;margin-top: 10px;">
                                 <div class="card-body flex-shrink-1" style="width: 300p;height: 100px;">
-                                    <h4 class="card-title">SDEV 250--Client Side Scripting</h4>
-                                    <h6 class="text-muted card-subtitle mb-2"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;">Professor Sullens</h6>
-                                    <p class="card-text">MWF 2pm-6pm</p>
+                                    <h4 class="card-title"><% user.course.title %></h4>
+                                    <h6 class="text-muted card-subtitle mb-2"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;"><% user.course.professor %></h6>
+                                    <p class="card-text"><% user.course.description %></p>
                                 </div>
                             </div>
-                            <div class="card" style="height: 125px;margin-top: 8px;">
-                                <div class="card-body flex-shrink-1" style="width: 300p;height: 100px;">
-                                    <h4 class="card-title" id="classOne">SDEV 250--Client Side Scripting</h4>
-                                    <h6 class="text-muted card-subtitle mb-2" id="professorOne"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;">Professor Sullens</h6>
-                                    <p class="card-text" id="classOneTime">MWF 2pm-6pm</p>
-                                </div>
-                            </div>
-                            <div class="card" style="height: 125px;margin-top: 8px;">
-                                <div class="card-body flex-shrink-1" style="width: 300p;height: 100px;">
-                                    <h4 class="card-title" id="classOne-1">SDEV 250--Client Side Scripting</h4>
-                                    <h6 class="text-muted card-subtitle mb-2" id="professorOne-1"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;">Professor Sullens</h6>
-                                    <p class="card-text" id="classOneTime-1">MWF 2pm-6pm</p>
-                                </div>
-                            </div>
+                                    <% }) %>
+                                    <% } else { %>
+                                    <h4 class="card-title center">You don't have any classes added.</h4>
+                                    <% } %> 
                         </div>
                         <div class="tab-pane" role="tabpanel" id="tab-2">
                             <div class="card" style="height: 125px;margin-top: 10px;">

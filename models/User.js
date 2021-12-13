@@ -23,7 +23,23 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    courses:[mongoose.SchemaTypes.ObjectId]
+    enrollment: {
+        type: String,
+        default: 'Enrolled',
+        required: true
+    },
+    academic: {
+        type: String,
+        default: 'Good'
+    },
+    financialaid: {
+        type: String,
+        default: 'Good'
+    },
+    courses: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 });
 
 module.exports = mongoose.model('User', userSchema);

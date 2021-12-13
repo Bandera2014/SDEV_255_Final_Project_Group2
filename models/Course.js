@@ -5,8 +5,13 @@ const courseSchema = new Schema({
     title: {
         type: String,
         required: true
-    },    
-    description: String
+    },
+    teacher: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
 });
 
 module.exports = mongoose.model('Course', courseSchema);

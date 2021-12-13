@@ -62,7 +62,7 @@
   });
 
 
-  app.post('/login', async (req,res) => {
+  app.post('/login' , async (req,res) => {
 // saver user input to variables
   const { email, password } = req.body;
 // search for email and see if its in the DB
@@ -129,7 +129,21 @@
       res.redirect('/');
     })
   })
-
+// Add course route
+app.get('/add', isAuth, async (req,res) => {
+  const user = await UserModel.findById(req.session.userid)
+  res.render('add', { title: 'Add Course', user });
+});
+app.post('/add', async (req, res) => {
+  // save form to var
+  var title = req.body.title;
+  var teacher = req.body.teacher;
+  var description = req.body.description;
+  // save vars to schema
+  course = new CourseModel ({title, teacher, description});
+  await course.save();
+  res.redirect('/home')
+})
 
   // route any other sites here
 

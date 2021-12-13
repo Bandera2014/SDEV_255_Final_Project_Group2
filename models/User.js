@@ -26,7 +26,6 @@ const userSchema = new Schema({
     enrollment: {
         type: String,
         default: 'Enrolled',
-        required: true
     },
     academic: {
         type: String,

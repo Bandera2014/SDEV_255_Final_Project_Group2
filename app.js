@@ -91,7 +91,6 @@
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, async (req,res) => {
     const user = await UserModel.findById(req.session.userid)
-    console.log(user.firstName)
     res.render('home', { title: 'Welcome', user }); // creates variable title = Home
  });
 

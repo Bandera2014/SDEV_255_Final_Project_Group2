@@ -59,16 +59,16 @@ const app = express();
 });
 
  // function to search for "Register" as an ejs type
- app.get('/register',(req,res) => {
+app.get('/register',(req,res) => {
   res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
 });
 app.post('/register', async (req, res) => {
     console.log("post register")
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const options = req.body.classification;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var email = req.body.email;
+    var password = req.body.password;
+    var options = req.body.classification;
     
     let user = await UserModel.findOne({email});
     console.log("user findone")
@@ -87,6 +87,26 @@ app.post('/register', async (req, res) => {
     await user.save();
     console.log("below save")
     res.redirect('/')
+})
+app.post('/login',async(req,res)=>{
+  console.log("begin login route")
+  var em = req.body.email;
+  var pw = req.body.email;
+  var opt = req.body.classification;
+  console.log(em)
+  console.log(pw)
+  
+  let user = await UserModel.find({
+    email:em,
+    password:pw,
+    options:opt
+  });
+  console.log(user)
+  if (user){
+    return res.redirect("/home")
+  }
+  console.log("end of login")
+
 })
 
  // route any other sites here

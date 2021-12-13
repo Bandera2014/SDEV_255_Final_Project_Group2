@@ -93,18 +93,24 @@ app.post('/login',async(req,res)=>{
   var em = req.body.email;
   var pw = req.body.email;
   var opt = req.body.classification;
-  console.log(em)
-  console.log(pw)
+  console.log(req.body.classification)
   
   let user = await UserModel.find({
-    email:em,
-    password:pw,
-    options:opt
+    firstName:"first",
+    lastName:"last",
+    email:req.body.email,
+    password:req.body.password,
+    options:req.body.classification,
+    
   });
+  // let user = await UserModel.findById("61b69fc07ec0f6b83288e906")
   console.log(user)
+  
   if (user){
-    return res.redirect("/home")
+    console.log("going home")
+    return res.render('home', { user: user, title: 'Home Page'})
   }
+  res.redirect('/login')
   console.log("end of login")
 
 })

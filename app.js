@@ -50,15 +50,21 @@ const app = express();
 
  // function to search for "home" as an ejs type
  app.get('/home',(req,res) => {
-   res.render('home', { title: 'Welcome' }); // creates variable title = Home
-});
+  User.find()
+    .then((result) => {
+      res.render('home', { title: 'Welcome', User: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  });
 
  // function to search for "Register" as an ejs type
  app.get('/register',(req,res) => {
   res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
 });
 app.post('/register', async (req, res) => {
-  const { firstName, lastName, email, password, major, options} = req.body;
+  const { firstName, lastName, email, password} = req.body;
   let user = await UserModel.findOne({email});
   if (user) {
     return res.redirect('/register');
@@ -67,7 +73,7 @@ user = new UserModel({
   firstName,
   lastName,
   email,
-  password,
+  password
 });
 await user.save();
 res.redirect('/')

@@ -4,7 +4,9 @@ const session = require('express-session');
 const MongoDBSession = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const UserModel = require('./models/User');
-const mongoURI = 'mongodb+srv://admin:pass1234@finalproject.hdvyl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+// const CourseModel = require('./models/Course')
+// const CourseLoader = require('./models/LoadCourses')
+const mongoURI = 'mongodb+srv://GeeksInSneaks:SDEV255@cluster0.a4h2y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
 // Connect to database
 mongoose.connect(mongoURI);
@@ -14,6 +16,9 @@ const store = new MongoDBSession({
   uri: mongoURI,
   collection: 'mySessions',
 })
+
+// createCourse()
+
 
 // express app (sets "app" to be used with express)
 const app = express(); 
@@ -58,19 +63,30 @@ const app = express();
   res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
 });
 app.post('/register', async (req, res) => {
-  const { firstName, lastName, email, password, major, options} = req.body;
-  let user = await UserModel.findOne({email});
-  if (user) {
-    return res.redirect('/register');
-  }
-user = new UserModel({
-  firstName,
-  lastName,
-  email,
-  password,
-});
-await user.save();
-res.redirect('/')
+    console.log("post register")
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const password = req.body.password;
+    const options = req.body.classification;
+    
+    let user = await UserModel.findOne({email});
+    console.log("user findone")
+    if (user) {
+      console.log("in the conditional")
+      return res.redirect('/register');
+    }
+    user = new UserModel({
+      firstName,
+      lastName,
+      email,
+      password,
+      options
+    });
+    console.log(user)
+    await user.save();
+    console.log("below save")
+    res.redirect('/')
 })
 
  // route any other sites here

@@ -5,6 +5,7 @@
  const MongoDBSession = require('connect-mongodb-session')(session);
  const mongoose = require('mongoose');
  const UserModel = require('./models/User');
+ const CourseModel = require('./models/Course');
  // const CourseModel = require('./models/Course')
  // const CourseLoader = require('./models/LoadCourses')
  const mongoURI = 'mongodb+srv://GeeksInSneaks:SDEV255@cluster0.a4h2y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
@@ -84,8 +85,10 @@
 })
  
 // Catalog routes
-  app.get('/catalog', isAuth, (req,res) => {
-    res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
+  app.get('/catalog', isAuth, async (req,res) => {
+    const user = await UserModel.findById(req.session.userid)
+    const courses = await CourseModel
+    res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
   });
  
 // function to search for "home" as an ejs type

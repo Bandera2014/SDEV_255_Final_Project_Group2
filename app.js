@@ -76,18 +76,19 @@
   }
   // sets user authentication to true
   req.session.isAuth = true;
+  req.session.userid = user.id;
   res.redirect('/home')
 })
  
 // Catalog routes
   app.get('/catalog', isAuth, (req,res) => {
     res.render('catalog', { title: 'Catalog' }); // creates variable title = Catalog
- });
+  });
  
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, (req,res) => {
     res.render('home', { title: 'Welcome' }); // creates variable title = Home
- });
+  });
  
 // register routes
   app.get('/register', (req,res) => {
@@ -110,13 +111,7 @@
   //password encrypt
     const hashedPsw = await bcrypt.hash (password, 12);
   // save vars to schema
-    user = new UserModel ({
-      firstName,
-      lastName,
-      email,
-      password: hashedPsw,
-      options
-    });
+    user = new UserModel ({firstName, lastName, email, password: hashedPsw, options});
     await user.save();
     res.redirect('/login')
   })
@@ -130,7 +125,7 @@
 
 
   // route any other sites here
- 
+
  
   /* keep this file on bottom
   if site cannot find any of the above 

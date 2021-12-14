@@ -34,15 +34,15 @@
                         <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Spring 2022</a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-3">Summer 2022</a></li>
                     </ul>
-                    <div class="tab-content">
+                    <div class="tab-content" style="overflow-y: auto;" >
                         <div class="tab-pane active" role="tabpanel" id="tab-1">
                                     <% if (user.courses.length > 0) { %>
                                         <% user.courses.forEach(course => { %>
                             <div class="card" style="height: 125px;margin-top: 10px;">
                                 <div class="card-body flex-shrink-1" style="width: 300p;height: 100px;">
-                                    <h4 class="card-title"><% user.course %></h4>
-                                    <h6 class="text-muted card-subtitle mb-2"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;"><% user.course %></h6>
-                                    <p class="card-text"><% user.course %></p>
+                                    <h4 class="card-title"><% user.course.title %></h4>
+                                    <h6 class="text-muted card-subtitle mb-2"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;"><% user.course.teacher %></h6>
+                                    <p class="card-text"><% user.course.description %></p>
                                 </div>
                             </div>
                                     <% }) %>

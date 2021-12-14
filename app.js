@@ -89,11 +89,18 @@
 })
  
 // Catalog routes
-  app.get('/catalog', isAuth, async (req,res) => {
-    const user = await UserModel.findById(req.session.userid)
-    const courses = await CourseModel
-    res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
-  });
+app.get('/catalog', isAuth, async (req,res) => {
+  const user = await UserModel.findById(req.session.userid)
+  const courses = await CourseModel.find()
+    .then(result => {
+      console.log(result)
+      res.render('catalog', { title: 'Catalog', user, courses:result }); // creates variable title = Catalog
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  res.redirect("/home")
+});
  
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, async (req,res) => {

@@ -93,10 +93,7 @@ app.get('/catalog', isAuth, async (req,res) => {
   const user = await UserModel.findById(req.session.userid)
   const courses = await CourseModel.find()
     .then(result => {
-      console.log(result)
-      result.forEach(r => {
-        console.log(r._id)
-      })
+      // console.log(result)
       res.render('catalog', { title: 'Catalog', user, courses:result }); // creates variable title = Catalog
     })
     .catch(err => {
@@ -108,6 +105,13 @@ app.get('/catalog', isAuth, async (req,res) => {
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, async (req,res) => {
     const user = await UserModel.findById(req.session.userid)
+
+    /*
+        TODO:  Need to pull the current user and obtain an array of courses they are enrolled in to pass into line 115.
+
+    */
+
+
     res.render('home', { title: 'Welcome', user }); // creates variable title = Home
  });
 
@@ -160,15 +164,34 @@ app.post('/add', async (req, res) => {
 })
 
   // route any other sites here
-app.post("/addStudent", async(req,res) => {
-  console.log("began addStudent route")
-  var title = req.body.title
-  var teacher = req.body.teacher
-  var description =req.body.description
+app.get("/enroll/:id", async(req,res) => {
+  console.log("began addStudent route\n\n")
+  const user = await UserModel.findById(req.session.userid)
+  const id = req.params.id           
+  console.log(user)
+  console.log(id)
+  UserModel.findOne(user)
+    .then(result => {
+      console.log(result)
+      result.courses.push(id)
+      result.save();
+
+      CourseModel.findById(id).then(result =>{      
+        console.log(result)
+
+      })
+
+      console.log(result)
+      res.render('home', { title: 'Welcome', user });
+    })
+    .catch(err => {
+      console.log(err)
+    })
 
 })
  
   //404 page
   app.use((req,res) => {
-     res.status(404).render('404', { title: '404' });// creates variable title = 404
+    const user = UserModel.findById(req.session.userid)
+     res.status(404).render('404', { title: '404', user });// creates variable title = 404
    });

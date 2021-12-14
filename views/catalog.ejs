@@ -32,14 +32,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 mx-auto" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
-                <div class="card" style="margin-top: 10px;height: 150px;">
-                    <div class="card-body">
-                        <h3><input class="d-inline-block float-end" type="checkbox" style="width: 25px;height: 25px;">Class Title</h3>
-                        <p><strong>Professor</strong></p>
-                        <p>Class Time</p>
-                    </div>
-                </div><button class="btn btn-outline-success active float-end" type="submit" style="margin-top: 10px;">Register</button>
+            <div class="col-md-6 mx-auto" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
+                <div class="card m-1" style="overflow-y: auto;" style="margin-top: 10px;height: 150px;">
+                    <% if (courses.length > 0) { %>
+                        <% courses.forEach(course => { %>
+                            <div class="card-body">
+                                <h3><input  type="checkbox" style="width: 25px;height: 25px;"><%= course.title %></h3>
+                                <p><strong><%= course.teacher %></strong></p>
+                                <p><%= course.description %></p>
+                                <a data-doc="<%= course._id %>" class="adder" href='/enroll/<%= course._id %>' >ADD</a>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p>There are no courses to display.</p>
+                    <% } %>
+                </div>
+                <button class="btn btn-outline-danger active float-end" type="submit" href="home" style="margin-top: 10px;">Delete</button>
+                <a class="forgot" href="register">Delete</a>
             </div>
         </div>
     </div>

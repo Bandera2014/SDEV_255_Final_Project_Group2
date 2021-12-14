@@ -86,8 +86,12 @@
  
 // Catalog routes
   app.get('/catalog', isAuth, async (req,res) => {
+    const courses = await CourseModel.find()
     const user = await UserModel.findById(req.session.userid)
-    const courses = await CourseModel
+    .populate('courses')
+    console.log(user.courses)
+    console.log(user)
+    console.log(courses)
     res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
   });
  

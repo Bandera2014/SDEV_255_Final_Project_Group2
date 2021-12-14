@@ -90,15 +90,17 @@
     const user = await UserModel.findById(req.session.userid)
     .populate('courses')
     console.log(user.courses)
-    console.log(user)
-    console.log(courses)
-    res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
+    res.render('catalog', { title: 'Catalog', user, courses });
   });
  
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, async (req,res) => {
-    const user = await UserModel.findById(req.session.userid)
-    res.render('home', { title: 'Welcome', user }); // creates variable title = Home
+  const courses = await CourseModel.find()
+  const user = await UserModel.findById(req.session.userid)
+  .populate('courses')
+  console.log(user.courses)
+  user.save()
+    res.render('home', { title: 'Welcome', user, courses }); // creates variable title = Home
  });
 
 // register routes
@@ -148,6 +150,18 @@ app.post('/add', async (req, res) => {
   await course.save();
   res.redirect('/home')
 })
+
+app.post('/:id', async(req,res) => {
+  var addedcourse = req.body.coursebtn
+  const courses = await CourseModel.find()
+  await UserModel.update (
+    { _id: req.session.userid }, 
+    { $addToSet: { courses: addedcourse } }
+  )
+  res.redirect('/home')
+});
+
+  // route any other sites here
 
   // route any other sites here
 

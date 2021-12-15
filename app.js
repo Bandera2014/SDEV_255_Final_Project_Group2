@@ -106,23 +106,6 @@ app.get('/catalog', isAuth, async (req,res) => {
   res.redirect("/home")
 });
  
-// function to search for "home" as an ejs type
-//  app.get('/home', isAuth, async (req,res) => {
-//     const user = await UserModel.findById(req.session.userid)
-//     const courses = await CourseModel.find()
-//     courses.forEach(c => {
-//       console.log(c.title)
-//     })
-    // console.log(user)
-    // const coursesInformation = []
-    // user.courses.forEach(c => {
-    //   var course = CourseModel.findById(c)
-    //   console.log(c.title)
-    //   coursesInformation.push(course)
-    // })
-    // console.log(coursesInformation)
-//     res.render('home', { title: 'Welcome', user, courses }); // creates variable title = Home
-//  });
  app.get('/home', isAuth, async (req,res) => {
   const courses = await CourseModel.find()
   const user = await UserModel.findById(req.session.userid)
@@ -181,6 +164,18 @@ app.post('/add', async (req, res) => {
   // save vars to schema
   course = new CourseModel ({title, teacher, description,credits,subject});
   await course.save();
+  const user = await UserModel.findById(req.session.userid)
+    .populate('courses').then(result => {
+      console.log(result)
+      result.courses.push(course)
+      result.save();
+      
+      console.log(result)
+      res.redirect('/home')//, { title: 'Welcome', user });
+    })
+    .catch(err => {
+      console.log(err)
+    })
   res.redirect('/home')
 })
 

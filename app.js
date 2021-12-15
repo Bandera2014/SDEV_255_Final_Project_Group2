@@ -164,11 +164,32 @@ app.post('/:id', async(req,res) => {
   res.redirect('/home')
 });
 
-  // route any other sites here
   app.post('/del/:id', async(req,res) => {
     var deletecourse = req.body.deletebtn
     await CourseModel.deleteOne ({ _id: deletecourse })
     res.redirect('/add')
+  });
+
+  app.get("/unenroll/:id", async(req,res) => {
+    console.log("unenrolling")
+    const user = await UserModel.findById(req.session.userid)
+    const course = await CourseModel.findById(req.params.id)
+    user.courses.remove(course)
+    await user.save()
+    console.log(user.courses)
+  
+    res.redirect('/home')
+  })
+
+  app.get("/courseDelete/:id", async(req, res) => {
+    console.log("began delete process")
+    await CourseModel.findByIdAndDelete(req.params.id)
+      .then(result => {
+        res.redirect('/home')
+      })
+      .catch(err => {
+        console.log(err);
+      });
   });
   // route any other sites here
 

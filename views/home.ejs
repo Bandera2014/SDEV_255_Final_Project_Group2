@@ -45,8 +45,11 @@
                                         <p class="card-text"><%= c.description %></p>
                                         <p class="card-text"><%= c.credits %></p>
                                         <p class="card-text"><%= c.subject %></p>
-                                        <a class="btn btn-danger" href='/unenroll/<%= c._id %>' >UNENROLL</a>
-                                        <a class="btn btn-danger" href='/courseDelete/<%= c._id %>' >Delete Course</a>
+                                        <% if (user.options == 'student') { %>
+                                            <a class="btn btn-danger" href='/unenroll/<%= c._id %>' >UNENROLL</a>
+                                        <% } else { %>
+                                            <a class="btn btn-danger" href='/courseDelete/<%= c._id %>' >Delete Course</a>
+                                        <% }%>
                                     </div>
                                 </div>
                             </div>

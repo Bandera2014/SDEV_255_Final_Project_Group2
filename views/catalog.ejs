@@ -38,7 +38,7 @@
                         <% courses.forEach(course => { %>
                             <div class="card-body">
                                 <h3><%= course.title %></h3>
-                                <p><strong><%= course.teacher %></strong></p>
+                                <p><strong><%= course.subject %> - <%= course.teacher %> - <%= course.credits %> credits.</strong></p>
                                 <p><%= course.description %></p>
                                 <form method="post" action="/<%= course._id %>">
                                 <button class="btn btn-success d-block" name="coursebtn" value="<%= course._id %>" type="submit">ADD</a></form>

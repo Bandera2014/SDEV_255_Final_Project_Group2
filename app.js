@@ -54,38 +54,38 @@
  
 // Login routes
 
-  app.get('/login',(req,res) => {
-    res.render('login', { title: 'Login' }); // creates variable title = Login
-  });
-  app.get('/',(req,res) => {
-    req.session.destroy((err) => {
-      if(err) throw err;
-      res.redirect('/login');
-    })
-    // res.redirect('/login')
-  });
+app.get('/login',(req,res) => {
+  res.render('login', { title: 'Login' }); // creates variable title = Login
+});
+app.get('/',(req,res) => {
+  req.session.destroy((err) => {
+    if(err) throw err;
+    res.redirect('/login');
+  })
+  // res.redirect('/login')
+});
 
 
-  app.post('/login' , async (req,res) => {
+app.post('/login' , async (req,res) => {
 // saver user input to variables
-  const { email, password } = req.body;
+const { email, password } = req.body;
 // search for email and see if its in the DB
-  const user = await UserModel.findOne({email});
-  if(!user) {
-    console.log('email doesnt exsist in database')
-    return res.redirect('/login')
-  }
+const user = await UserModel.findOne({email});
+if(!user) {
+  console.log('email doesnt exsist in database')
+  return res.redirect('/login')
+}
 // compare user password with database pass
-  const isMatch = await bcrypt.compare(password, user.password);
-  if(!isMatch) {
-    console.log('incorrect password')
-    return res.redirect('/login');
-  }
-  // sets user authentication to true
-  req.session.isAuth = true;
-  req.session.userid = user.id;
-  console.log('logged in')
-  res.redirect('/home')
+const isMatch = await bcrypt.compare(password, user.password);
+if(!isMatch) {
+  console.log('incorrect password')
+  return res.redirect('/login');
+}
+// sets user authentication to true
+req.session.isAuth = true;
+req.session.userid = user.id;
+console.log('logged in')
+res.redirect('/home')
 })
  
 // Catalog routes
@@ -97,7 +97,7 @@ app.get('/catalog', isAuth, async (req,res) => {
       result.forEach(r => {
         console.log(r._id)
       })
-      res.render('catalog', { title: 'Catalog', user, courses:result }); // creates variable title = Catalog
+      res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
     })
     .catch(err => {
       console.log(err)
@@ -153,8 +153,10 @@ app.post('/add', async (req, res) => {
   var title = req.body.title;
   var teacher = req.body.teacher;
   var description = req.body.description;
+  var credits = req.body.credits
+  var subject = req.body.subject
   // save vars to schema
-  course = new CourseModel ({title, teacher, description});
+  course = new CourseModel ({title, teacher, description,credits,subject});
   await course.save();
   res.redirect('/home')
 })
@@ -167,8 +169,35 @@ app.post("/addStudent", async(req,res) => {
   var description =req.body.description
 
 })
+
+app.get("/enroll/:id", async(req,res) => {
+  console.log("began addStudent route\n\n")
+  const user = await UserModel.findById(req.session.userid)
+  const id = req.params.id           
+  console.log(user)
+  console.log(id)
+  UserModel.findOne(user)
+    .then(result => {
+      console.log(result)
+      result.courses.push(id)
+      result.save();
+
+      CourseModel.findById(id).then(result =>{      
+        console.log(result)
+
+      })
+
+      console.log(result)
+      res.render('home', { title: 'Welcome', user });
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+})
  
-  //404 page
-  app.use((req,res) => {
-     res.status(404).render('404', { title: '404' });// creates variable title = 404
-   });
+//404 page
+app.use((req,res) => {
+  const user = UserModel.findById(req.session.userid)
+  res.status(404).render('404', { title: '404', user });
+  });

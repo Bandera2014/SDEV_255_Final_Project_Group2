@@ -5,13 +5,15 @@
     <%- include('./partials/nav.ejs') %>
 
     <div class="container">
-            <form method="post" action="/add" style="background: rgba(244,247,245,0.84); padding-top: 100px; margin-top: 20px">
-                <div class="m-5"><h1>Add Classes</h1></div>
-                <div class="m-3"><input class="form-control" type="text" name="title" placeholder="Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
-                <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
-                <div class="m-3"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
-                <div class="m-3"><button class="btn btn-danger d-block w-100" id="Submit" type="submit">Add Course</button></div>
-    <script src="/bootstrap.min.js"/></script>
+        <form method="post" action="/add" style="background: rgba(244,247,245,0.84); padding-top: 100px; margin-top: 20px">
+            <div class="m-5"><h1>Add Classes</h1></div>
+            <div class="m-3"><input class="form-control" type="text" name="title" placeholder="Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
+            <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+            <div class="m-3"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
+            <div class="m-3"><input class="form-control" type="text" id="classSub" name="subject" placeholder="Subject" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+            <div class="m-3"><input class="form-control" type="text" name="credits" id="classCredplaceholder=" placeholder="Credits" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+            <div class="m-3"><button class="btn btn-danger d-block w-100" id="Submit" type="submit">Add Course</button></div>
+    <script src="/bootstrap.min.js"></script>
     <%- include('./partials/footer.ejs') %>
 </body>
 

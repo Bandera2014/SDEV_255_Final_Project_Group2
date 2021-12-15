@@ -12,6 +12,12 @@ const courseSchema = new Schema({
     description: {
         type: String,
     },
+    credits: {
+        type: String,
+    },
+    subject: {
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('Course', courseSchema);

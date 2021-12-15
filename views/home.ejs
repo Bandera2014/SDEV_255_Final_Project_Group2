@@ -38,15 +38,15 @@
                         <div class="tab-pane active" role="tabpanel" id="tab-1">
                             <% if (user.courses.length > 0) { %>
                                 <% user.courses.forEach(c => { %>
-                                <div class="card" style="height: 125px;margin-top: 10px;">
-                                    <div class="card-body flex-shrink-1" style="width: 300p;height: 100px;">
+                                <div class="card" style="height: 275px;margin-top: 10px;">
+                                    <div class="card-body flex-shrink-1" style="height: 275px;">
                                         <h4 class="card-title"><%= c.title %></h4>
                                         <h6 class="text-muted card-subtitle mb-2"><img class="flex-row-reverse" src="img/icons8-send-email-100.png" width="30px" height="30px" alt="email" style="padding-right: 4px;"><%= c.teacher %></h6>
                                         <p class="card-text"><%= c.description %></p>
                                         <p class="card-text"><%= c.credits %></p>
                                         <p class="card-text"><%= c.subject %></p>
-                                        <a href='/unenroll/<%= c._id %>' >UNENROLL</a>
-                                        <a href='/courseDelete/<%= c._id %>' >Delete Course</a>
+                                        <a class="btn btn-danger" href='/unenroll/<%= c._id %>' >UNENROLL</a>
+                                        <a class="btn btn-danger" href='/courseDelete/<%= c._id %>' >Delete Course</a>
                                     </div>
                                 </div>
                                 <% }) %>

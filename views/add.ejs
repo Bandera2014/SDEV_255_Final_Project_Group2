@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mx-auto" style="overflow-y: auto; background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
+                <div class="col-md-6 mx-auto" style="overflow-y: auto; min-height: 600px; background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
         <% if (courses.length > 0) { %>
             <% courses.forEach(course => { %>
                     <div class="card" style="height: 200px;">
@@ -27,8 +27,12 @@
                                     <h3><%= course.title %></h3>
                                     <p><strong><%= course.subject %> - <%= course.teacher %> - <%= course.credits %> credits.</strong></p>
                                     <p><%= course.description %></p>
-                                    <form method="post" action="/del/<%= course._id %>">
-                                        <button class="btn btn-danger d-block" name="deletebtn" value="<%= course._id %>" type="submit">Delete</a></form>
+                                    <div class="row">                                    
+                                    <div class="col-6"><form method="post" action="/<%= course._id %>">
+                                        <button class="btn btn-warning" name="coursebtn" value="<%= course._id %>" type="submit">Assign to me</a></form></div>
+                                    <div class="col-6"><form method="post" action="/del/<%= course._id %>">
+                                        <button class="btn btn-danger" name="deletebtn" value="<%= course._id %>" type="submit">Delete</a></form></div>
+</div>
                                 </div>
                             <% }) %>
                         <% } else { %>

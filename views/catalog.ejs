@@ -37,10 +37,9 @@
                     <% if (courses.length > 0) { %>
                         <% courses.forEach(course => { %>
                             <div class="card-body">
-                                <h3><input  type="checkbox" style="width: 25px;height: 25px;"><%= course.title %></h3>
                                 <p><strong><%= course.teacher %></strong></p>
                                 <p><%= course.description %></p>
-                                <a data-doc="<%= course._id %>" class="adder" href='/enroll/<%= course._id %>' >ADD</a>
+                                <a data-doc="<%= course._id %>" class="btn btn-success d-block w-50" href='/enroll/<%= course._id %>' >ENROLL</a>
                             </div>
                         <% }) %>
                     <% } else { %>

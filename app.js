@@ -42,15 +42,15 @@
   app.listen(3000);
  
 // middleware & static files
-  app.use(express.static('public'));
-  const isAuth = (req, res, next) => {
-    if(req.session.isAuth) {
-      next()
-    } else {
-      console.log('not authenticated')
-      res.redirect('/login');
-    }
- }
+app.use(express.static('public'));
+const isAuth = (req, res, next) => {
+  if(req.session.isAuth) {
+    next()
+  } else {
+    console.log('not authenticated')
+    res.redirect('/login');
+  }
+}
  
 // Login routes
 
@@ -67,48 +67,71 @@ app.get('/',(req,res) => {
 
 
 app.post('/login' , async (req,res) => {
-// saver user input to variables
-const { email, password } = req.body;
-// search for email and see if its in the DB
-const user = await UserModel.findOne({email});
-if(!user) {
-  console.log('email doesnt exsist in database')
-  return res.redirect('/login')
-}
-// compare user password with database pass
-const isMatch = await bcrypt.compare(password, user.password);
-if(!isMatch) {
-  console.log('incorrect password')
-  return res.redirect('/login');
-}
-// sets user authentication to true
-req.session.isAuth = true;
-req.session.userid = user.id;
-console.log('logged in')
-res.redirect('/home')
+  // saver user input to variables
+  const { email, password } = req.body;
+  // search for email and see if its in the DB
+  const user = await UserModel.findOne({email});
+  if(!user) {
+    console.log('email doesnt exsist in database')
+    return res.redirect('/login')
+  }
+  // compare user password with database pass
+  const isMatch = await bcrypt.compare(password, user.password);
+  if(!isMatch) {
+    console.log('incorrect password')
+    return res.redirect('/login');
+  }
+  // sets user authentication to true
+  req.session.isAuth = true;
+  req.session.userid = user.id;
+  console.log('logged in')
+  res.redirect('/home')
 })
  
 // Catalog routes
 app.get('/catalog', isAuth, async (req,res) => {
   const user = await UserModel.findById(req.session.userid)
   const courses = await CourseModel.find()
-    .then(result => {
-      console.log(result)
-      result.forEach(r => {
-        console.log(r._id)
-      })
+    // .then(result => {
+      // console.log(result)
+      // result.forEach(r => {
+      //   console.log(r._id)
+      // })
+      console.log(courses)
       res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    // })
+    // .catch(err => {
+      // console.log(err)
+    // })
   res.redirect("/home")
 });
  
 // function to search for "home" as an ejs type
+//  app.get('/home', isAuth, async (req,res) => {
+//     const user = await UserModel.findById(req.session.userid)
+//     const courses = await CourseModel.find()
+//     courses.forEach(c => {
+//       console.log(c.title)
+//     })
+    // console.log(user)
+    // const coursesInformation = []
+    // user.courses.forEach(c => {
+    //   var course = CourseModel.findById(c)
+    //   console.log(c.title)
+    //   coursesInformation.push(course)
+    // })
+    // console.log(coursesInformation)
+//     res.render('home', { title: 'Welcome', user, courses }); // creates variable title = Home
+//  });
  app.get('/home', isAuth, async (req,res) => {
-    const user = await UserModel.findById(req.session.userid)
-    res.render('home', { title: 'Welcome', user }); // creates variable title = Home
+  const courses = await CourseModel.find()
+  const user = await UserModel.findById(req.session.userid)
+  .populate('courses')
+  console.log("hi")
+  console.log(user.courses)
+  console.log("bye")
+  user.save()
+    res.render('home', { title: 'Welcome', user, courses }); // creates variable title = Home
  });
 
 // register routes
@@ -162,7 +185,7 @@ app.post('/add', async (req, res) => {
 })
 
   // route any other sites here
-app.post("/addStudent", async(req,res) => {
+app.post("/addStudent", async(req,res) => {     //trash
   console.log("began addStudent route")
   var title = req.body.title
   var teacher = req.body.teacher
@@ -174,30 +197,25 @@ app.get("/enroll/:id", async(req,res) => {
   console.log("began addStudent route\n\n")
   const user = await UserModel.findById(req.session.userid)
   const id = req.params.id           
+  const course = await CourseModel.findById(id)
   console.log(user)
   console.log(id)
   UserModel.findOne(user)
-    .then(result => {
+    .populate('courses').then(result => {
       console.log(result)
-      result.courses.push(id)
+      result.courses.push(course)
       result.save();
-
-      CourseModel.findById(id).then(result =>{      
-        console.log(result)
-
-      })
-
+      
       console.log(result)
-      res.render('home', { title: 'Welcome', user });
+      res.redirect('/home')//, { title: 'Welcome', user });
     })
     .catch(err => {
       console.log(err)
     })
-
 })
  
 //404 page
 app.use((req,res) => {
   const user = UserModel.findById(req.session.userid)
   res.status(404).render('404', { title: '404', user });
-  });
+});

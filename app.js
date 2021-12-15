@@ -202,12 +202,34 @@ app.get("/enroll/:id", async(req,res) => {
       result.save();
       
       console.log(result)
-      res.redirect('/home')//, { title: 'Welcome', user });
+      res.redirect('/home')
     })
     .catch(err => {
       console.log(err)
     })
 })
+
+app.get("/unenroll/:id", async(req,res) => {
+  console.log("unenrolling")
+  const user = await UserModel.findById(req.session.userid)
+  const course = await CourseModel.findById(req.params.id)
+  user.courses.remove(course)
+  await user.save()
+  console.log(user.courses)
+
+  res.redirect('/home')
+})
+
+app.get("/courseDelete/:id", async(req, res) => {
+  console.log("began delete process")
+  await CourseModel.findByIdAndDelete(req.params.id)
+    .then(result => {
+      res.redirect('/home')
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
  
 //404 page
 app.use((req,res) => {

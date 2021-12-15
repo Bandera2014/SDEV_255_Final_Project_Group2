@@ -6,26 +6,26 @@
 
     <div class="container">
         <div class="row mx-auto">
-            <div class="col-md-5" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);">
+            <div class="col-md-12" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);">
                 <div class="card">
                     <div class="card-body">
                         <form method="post" action="/add" style="background: rgba(244,247,245,0.84); margin-top: 20px">
-                            <div class="m-5"><h1>Add Classes</h1></div>
-                            <div class="m-3"><input class="form-control" type="text" name="title" placeholder="Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
-                            <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                            <div class="m-3">
+                                <h1>Edit Course Catalog</h1>
+                                <p>When deleting courses, all fields with an asterisk<br>must match what has been previously entered.</p>
+                            </div>
+                            <div class="m-3"><input class="form-control" type="text" name="title" placeholder="* Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
+                            <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="* Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                            <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="* Subject" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                            <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="* Credits" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
                             <div class="m-3"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
-                            <div class="m-3"><button class="btn btn-danger d-block w-100" id="Submit" type="submit">Add Course</button></div>
+                            <div class="m-3 row">
+                                <button class="btn btn-success d-block col-md-5 m-3" id="Submit" type="submit">Add Course</button>
+                                <button class="btn btn-danger d-block col-md-5 m-3" id="Delete" type="">Delete Course</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 mx-auto" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
-                <div class="card" style="margin-top: 10px;height: 150px;">
-                    <div class="card-body">
-                        <h3><input class="d-inline-block float-end" type="checkbox" style="width: 25px;height: 25px;">Class Title</h3>
-                        <p><strong>Professor</strong></p>
-                        <p>Class Time</p>
-                    </div>
-                </div><button class="btn btn-outline-danger active float-end" type="submit" style="margin-top: 10px;">Delete</button>
             </div>
         </div>
     <script src="/bootstrap.min.js"/></script>

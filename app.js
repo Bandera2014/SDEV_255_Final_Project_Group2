@@ -58,7 +58,11 @@
     res.render('login', { title: 'Login' }); // creates variable title = Login
   });
   app.get('/',(req,res) => {
-    res.redirect('/login')
+    req.session.destroy((err) => {
+      if(err) throw err;
+      res.redirect('/login');
+    })
+    // res.redirect('/login')
   });
 
 
@@ -85,15 +89,21 @@
 })
  
 // Catalog routes
-  app.get('/catalog', isAuth, async (req,res) => {
-    const courses = await CourseModel.find()
-    const user = await UserModel.findById(req.session.userid)
-    .populate('courses')
-    console.log(user.courses)
-    console.log(user)
-    console.log(courses)
-    res.render('catalog', { title: 'Catalog', user, courses }); // creates variable title = Catalog
-  });
+app.get('/catalog', isAuth, async (req,res) => {
+  const user = await UserModel.findById(req.session.userid)
+  const courses = await CourseModel.find()
+    .then(result => {
+      console.log(result)
+      result.forEach(r => {
+        console.log(r._id)
+      })
+      res.render('catalog', { title: 'Catalog', user, courses:result }); // creates variable title = Catalog
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  res.redirect("/home")
+});
  
 // function to search for "home" as an ejs type
  app.get('/home', isAuth, async (req,res) => {
@@ -102,37 +112,37 @@
  });
 
 // register routes
-  app.get('/register', (req,res) => {
-    res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
-  });
-  app.post('/register', async (req, res) => {
-    console.log("post register")
-  // save form to var
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var email = req.body.email;
-    var password = req.body.password;
-    var options = req.body.classification;
-  // check to see email already exsists
-    let user = await UserModel.findOne({email});
-    if (user) {
-      console.log("email already exsists");
-      return res.redirect('/register');
-    }
-  //password encrypt
-    const hashedPsw = await bcrypt.hash (password, 12);
-  // save vars to schema
-    user = new UserModel ({firstName, lastName, email, password: hashedPsw, options});
-    await user.save();
-    res.redirect('/login')
-  })
+app.get('/register', (req,res) => {
+  res.render('register', { title: 'Register for an Account' }); // creates variable title = Register
+});
+app.post('/register', async (req, res) => {
+  console.log("post register")
+// save form to var
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  var email = req.body.email;
+  var password = req.body.password;
+  var options = req.body.classification;
+// check to see email already exsists
+  let user = await UserModel.findOne({email});
+  if (user) {
+    console.log("email already exsists");
+    return res.redirect('/register');
+  }
+//password encrypt
+  const hashedPsw = await bcrypt.hash (password, 12);
+// save vars to schema
+  user = new UserModel ({firstName, lastName, email, password: hashedPsw, options});
+  await user.save();
+  res.redirect('/login')
+})
 // Logout button
-  app.post('/logout', (req,res) => {
-    req.session.destroy((err) => {
-      if(err) throw err;
-      res.redirect('/');
-    })
+app.post('/logout', (req,res) => {
+  req.session.destroy((err) => {
+    if(err) throw err;
+    res.redirect('/');
   })
+})
 // Add course route
 app.get('/add', isAuth, async (req,res) => {
   const user = await UserModel.findById(req.session.userid)
@@ -150,12 +160,15 @@ app.post('/add', async (req, res) => {
 })
 
   // route any other sites here
+app.post("/addStudent", async(req,res) => {
+  console.log("began addStudent route")
+  var title = req.body.title
+  var teacher = req.body.teacher
+  var description =req.body.description
 
+})
  
-  /* keep this file on bottom
-  if site cannot find any of the above 
-  then default to this 404 page.
-  Also sets the error status to 404*/
+  //404 page
   app.use((req,res) => {
      res.status(404).render('404', { title: '404' });// creates variable title = 404
    });

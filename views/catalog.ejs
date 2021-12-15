@@ -33,14 +33,14 @@
                 </div>
             </div>
             <div class="col-md-6 mx-auto" style="background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
-                <div class="card m-1" style="overflow-y: auto;" style="margin-top: 10px;height: 150px;">
+                <div class="card" style="overflow-y: auto;" style="margin-top: 10px;height: 150px;">
                     <% if (courses.length > 0) { %>
                         <% courses.forEach(course => { %>
                             <div class="card-body">
                                 <h3><input  type="checkbox" style="width: 25px;height: 25px;"><%= course.title %></h3>
                                 <p><strong><%= course.teacher %></strong></p>
                                 <p><%= course.description %></p>
-                                <a data-doc="<%= course._id %>" class="adder" href='/enroll/<%= course._id %>' >ADD</a>
+                                <a data-doc="<%= course._id %>" class="adder">ADD</a>
                             </div>
                         <% }) %>
                     <% } else { %>
@@ -50,9 +50,11 @@
                 <button class="btn btn-outline-danger active float-end" type="submit" href="home" style="margin-top: 10px;">Delete</button>
                 <a class="forgot" href="register">Delete</a>
             </div>
-        </div>
     </div>
-    <script src="/bootstrap.min.js"/></script>
+    <script src="/bootstrap.min.js"></script>
+    <script>
+        const allClasses = document.querySelector('a.adder')
+    </script>
     <%- include('./partials/footer.ejs') %>
 </body>
 

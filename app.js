@@ -137,18 +137,21 @@
   })
 // Add course route
 app.get('/add', isAuth, async (req,res) => {
+  const courses = await CourseModel.find()
   const user = await UserModel.findById(req.session.userid)
-  res.render('add', { title: 'Add Course', user });
+  res.render('add', { title: 'Add Course', user, courses });
 });
 app.post('/add', async (req, res) => {
   // save form to var
   var title = req.body.title;
   var teacher = req.body.teacher;
   var description = req.body.description;
+  var subject = req.body.subject;
+  var credits = req.body.credits;
   // save vars to schema
-  course = new CourseModel ({title, teacher, description});
+  course = new CourseModel ({title, teacher, description, subject, credits});
   await course.save();
-  res.redirect('/home')
+  res.redirect('/add')
 })
 
 app.post('/:id', async(req,res) => {
@@ -162,7 +165,11 @@ app.post('/:id', async(req,res) => {
 });
 
   // route any other sites here
-
+  app.post('/del/:id', async(req,res) => {
+    var deletecourse = req.body.deletebtn
+    await CourseModel.deleteOne ({ _id: deletecourse })
+    res.redirect('/add')
+  });
   // route any other sites here
 
  

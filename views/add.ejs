@@ -1,18 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" style="background: linear-gradient(2deg, white, rgb(14,47,8) 34%);">
-    <%- include('./partials/head.ejs') %>
-<body class="d-flex flex-column min-vh-100" style="margin-bottom: 0px;background: linear-gradient(0deg, #093824 34%, white 100%);width: 100%;height: 100%;">
-    <%- include('./partials/nav.ejs') %>
-
-    <div class="container">
-            <form method="post" action="/add" style="background: rgba(244,247,245,0.84); padding-top: 100px; margin-top: 20px">
-                <div class="m-5"><h1>Add Classes</h1></div>
-                <div class="m-3"><input class="form-control" type="text" name="title" placeholder="Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
-                <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
-                <div class="m-3"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
-                <div class="m-3"><button class="btn btn-danger d-block w-100" id="Submit" type="submit">Add Course</button></div>
-    <script src="/bootstrap.min.js"/></script>
-    <%- include('./partials/footer.ejs') %>
+    <%- include('./partials/head.ejs') %>  
+    <body class="d-flex flex-column min-vh-100" style="margin-bottom: 0px;background: linear-gradient(0deg, #093824 34%, white 100%);width: 100%;height: 100%;">
+        <%- include('./partials/nav.ejs') %>
+        <div class="container">
+            <div class="row mx-auto">
+                <div class="col-md-5" style="background: rgba(244,247,245,0.78);height: 600px;margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);">
+                    <div class="card" style="margin: 10px;">
+                        <div class="card-body">
+                            <form method="post" action="/add">
+                                <div class="m-5"><h3>Add Classes</h3></div>
+                                <div class="m-3"><input class="form-control" type="text" name="title" placeholder="Course Title" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" autofocus required></div>
+                                <div class="m-3"><input class="form-control" type="text" name="teacher" placeholder="Professor" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                                <div class="m-3"><textarea class="form-control" name="description" rows="3" placeholder="Description"></textarea></div>
+                                <div class="m-3"><input class="form-control" type="text" name="subject" placeholder="Subject" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                                <div class="m-3"><input class="form-control" type="text" name="credits" placeholder="Credits" style="color: rgb(11,11,11); border-width: 1px; border-style: solid;" required></div>
+                                <div class="m-3"><button class="btn btn-success d-block w-100" id="Submit" type="submit">Add Course</button></div></form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mx-auto" style="overflow-y: auto; background: rgba(244,247,245,0.78);margin-top: 40px;border-radius: 10px;border-style: solid;border-color: rgb(147,147,147);margin-right: 0;">
+        <% if (courses.length > 0) { %>
+            <% courses.forEach(course => { %>
+                    <div class="card" style="height: 200px;">
+                                <div class="card-body">
+                                    <h3><%= course.title %></h3>
+                                    <p><strong><%= course.subject %> - <%= course.teacher %> - <%= course.credits %> credits.</strong></p>
+                                    <p><%= course.description %></p>
+                                    <form method="post" action="/del/<%= course._id %>">
+                                        <button class="btn btn-danger d-block" name="deletebtn" value="<%= course._id %>" type="submit">Delete</a></form>
+                                </div>
+                            <% }) %>
+                        <% } else { %>
+                            <p>There are no courses to display.</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const trashcan = document.querySelector('a.delete');
+            trashcan.addEventListener('click', (e) => {
+              const endpoint = `/${trashcan.dataset.doc}`;
+              fetch(endpoint, {
+                method: 'DELETE',
+              })
+              .then(response => response.json())
+              .then(data => window.location.href = data.redirect)
+              .catch(err => console.log(err));
+            });
+          </script>
+        <script src="/bootstrap.min.js"/></script>
 </body>
 
 </html>
